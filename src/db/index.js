@@ -9,6 +9,8 @@ const DB_DIALECT = 'postgres';
 const DB_PASS = process.env.DB_DIALECT || '123456';
 const DB_HOST = process.env.DB_HOST || 'localhost';
 
+console.log(DB_NAME, DB_DIALECT, DB_PASS, DB_HOST);
+
 // conet with database
 const config = () => new Sequelize(DB_NAME, DB_DIALECT, DB_PASS, { host: DB_HOST, dialect: DB_DIALECT });
 
