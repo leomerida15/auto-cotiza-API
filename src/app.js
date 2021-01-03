@@ -20,6 +20,8 @@ app.set('port', process.env.PORT || 5000);
 
 console.log(3);
 
+console.table([app.get('port')]);
+
 // Middlewares
 app.use(express.json());
 
