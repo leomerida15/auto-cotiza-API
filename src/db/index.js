@@ -4,13 +4,13 @@ const init_models = require('./models/');
 const keys = require('./keys/');
 const pre_into = require('./contents');
 
-const db_name = process.env.db_name || 'auto-gestion';
-const db_dialect = process.env.sql_run || 'postgres';
-const db_pass = process.env.db_pass || '123456';
-const db_host = process.env.sql_run || 'localhost';
+const DB_NAME = process.env.DB_NAME || 'auto-gestion';
+const DB_DIALECT = 'postgres';
+const DB_PASS = process.env.DB_DIALECT || '123456';
+const DB_HOST = process.env.DB_HOST || 'localhost';
 
 // conet with database
-const config = () => new Sequelize(db_name, db_dialect, db_pass, { host: db_host, dialect: db_dialect });
+const config = () => new Sequelize(DB_NAME, DB_DIALECT, DB_PASS, { host: DB_HOST, dialect: DB_DIALECT });
 
 const sequelize = config();
 
