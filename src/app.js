@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const err = require('./middlewares/err/');
+const err_404 = require('./middlewares/err/err_404');
 const path = require('path');
 
 // initialz
@@ -41,7 +41,7 @@ console.log(6);
 routes(app);
 
 // errors
-app.use(err(404));
+app.use(err_404);
 
 // init server
 app.listen(app.get('port'), () => {
