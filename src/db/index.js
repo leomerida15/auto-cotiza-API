@@ -14,7 +14,16 @@ console.log('db >=+-----=<:+:>=-----+<');
 console.log({ DB_NAME, DB_DIALECT, DB_PASS, DB_HOST });
 
 // conet with database
-const config = () => new Sequelize(DB_NAME, DB_USER, DB_PASS, { host: DB_HOST, dialect: DB_DIALECT });
+const config = () =>
+	new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+		host: DB_HOST,
+		dialect: DB_DIALECT,
+		dialectOptions: {
+			ssl: {
+				rejectUnauthorized: false,
+			},
+		},
+	});
 
 const sequelize = config();
 
