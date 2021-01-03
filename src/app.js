@@ -6,6 +6,7 @@ const path = require('path');
 // initialz
 const app = express();
 const routes = require('./routers/index.routes');
+app.use(cors('*'));
 
 // db
 require('./db/');
