@@ -20,6 +20,8 @@ app.set('port', process.env.PORT || 5000);
 app.use(express.json());
 
 // Routes
+app.use('*', cash);
+
 app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
 app.use(express.static(path.resolve(__dirname, 'public/dist')));
 
@@ -30,7 +32,7 @@ app.get('/', function (req, res) {
 routes(app);
 
 // errors
-app.use(cash, err_404);
+app.use(err_404);
 
 // init server
 app.listen(app.get('port'), () => {
