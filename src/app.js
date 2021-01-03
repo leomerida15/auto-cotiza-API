@@ -6,7 +6,6 @@ const path = require('path');
 // initialz
 const app = express();
 const routes = require('./routers/index.routes');
-// const err_404 = require('./middlewares/error/404');
 
 // db
 require('./db/');
@@ -28,12 +27,10 @@ app.get('/', function (req, res) {
 routes(app);
 
 // errors
-// app.use(err);
+app.use(err(404));
 
 // init server
 app.listen(app.get('port'), () => {
-	// console.clear();
-
 	console.log('                                                                  ()_()');
 	console.log(`app corriendo en el puerto http://localhost:${app.get('port')} leoM             (o.o)`);
 	console.log('                                                                  (|_|)*');
