@@ -8,14 +8,22 @@ const app = express();
 const routes = require('./routers/index.routes');
 app.use(cors('*'));
 
+console.log(1);
+
 // db
 require('./db/');
+
+console.log(2);
 
 // Settings
 app.set('port', process.env.PORT || 5000);
 
+console.log(3);
+
 // Middlewares
 app.use(express.json());
+
+console.log(4);
 
 // Routes
 app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
@@ -23,7 +31,10 @@ app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
 
 app.get('/', function (req, res) {
 	// res.sendFile(path.resolve(__dirname, 'public/dist') + '/index.html');
+	console.log(5);
 });
+
+console.log(6);
 
 routes(app);
 
