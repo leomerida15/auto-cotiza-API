@@ -6,7 +6,7 @@ const pre_into = require('./contents');
 
 const DB_NAME = process.env.DB_NAME || 'auto-gestion';
 const DB_DIALECT = 'postgres';
-const DB_PASS = process.env.DB_DIALECT || '123456';
+const DB_PASS = process.env.DB_PASS || '123456';
 const DB_HOST = process.env.DB_HOST || 'localhost';
 
 console.log('db >=+-----=<:+:>=-----+<');
