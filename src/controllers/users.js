@@ -79,7 +79,7 @@ const social = async (req, res) => {
 		console.log(user);
 
 		// filter respues
-		const data = isNewUser ? user.dataValues : user[0].dataValues;
+		const data = user.dataValues;
 
 		// token
 		const token = await Token.generate(data.id, data.email);
