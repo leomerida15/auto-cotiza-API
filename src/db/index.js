@@ -27,7 +27,7 @@ const model = init_models(sequelize, DataTypes);
 
 keys(model);
 
-const force = true;
+const force = false;
 sequelize.sync({ force }).then((resp) => {
 	if (resp) console.log('Init DB SUCCESS');
 	else console.log('Init DB err');
