@@ -24,7 +24,7 @@ const create = async (req, res) => {
 		const id_user = valid_token.id;
 		const { name, price, desc, sects } = req.body;
 
-		const URL = process.env.PORT ? '' : 'http://localhost:5000/';
+		const URL = process.env.PORT ? '/' : 'http://localhost:5000/';
 		const { filename } = req.file;
 		const path = URL + 'uploads/' + filename;
 		const ids = sects.split(',');
