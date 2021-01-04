@@ -81,6 +81,9 @@ const social = async (req, res) => {
 		// filter respues
 		const data = user.dataValues;
 
+		console.log('data');
+		console.log(data);
+
 		// token
 		const token = await Token.generate(data.id, data.email);
 
