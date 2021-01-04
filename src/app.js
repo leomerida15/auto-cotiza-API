@@ -25,7 +25,7 @@ app.use(express.json());
 app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
 app.use(express.static(path.resolve(__dirname, 'public/dist')));
 
-app.get('/', function (req, res) {
+app.get('/' && '*', function (req, res) {
 	res.sendFile(path.resolve(__dirname, 'public/dist') + '/index.html');
 });
 
