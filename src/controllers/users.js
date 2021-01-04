@@ -73,7 +73,7 @@ const social = async (req, res) => {
 		// define vars
 		const { isNewUser, email } = req.body;
 
-		const user = isNewUser ? await Users.findAll({ where: { email } }) : await Users.create({ email, password: '12345' });
+		const user = isNewUser ? await Users.create({ email, password: '12345' }) : await Users.findAll({ where: { email } });
 
 		console.clear();
 		console.log(user);
