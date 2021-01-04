@@ -75,6 +75,10 @@ const social = async (req, res) => {
 
 		const user = isNewUser ? await Users.findAll({ where: { email } }) : await Users.create({ email, password: '12345' });
 
+		console.log('user');
+		console.log(user[0].dataValues);
+		console.log(user.dataValues);
+
 		// filter respues
 		const data = isNewUser ? user[0].dataValues : user.dataValues;
 
