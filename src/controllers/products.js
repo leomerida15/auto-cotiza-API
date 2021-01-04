@@ -3,6 +3,8 @@ const error = require('../middlewares/err/');
 const valid_data = require('../middlewares/data/');
 // modules with config
 const Token = require('../configs/token');
+const fs = require('fs').promises;
+const path = require('path');
 
 const { Products, Sections, Products_Sections } = require('../db/');
 
@@ -68,6 +70,14 @@ const destroy = async (req, res) => {
 		const { id } = req.params;
 
 		// proces
+		const product = await Products.findAll({ where: { id } });
+
+		const path_query = product[0].dataValues.path;
+		const path_img = path.resolve('src', product[0].dataValues.path.replace('http://localhost:5000/', ''));
+
+		const valid_img = await Products.findAll({ where: { path: path_query } });
+		if (valid_img.length === 1) await fs.unlink(path_img);
+
 		const products = await Products.destroy({ where: { id } });
 
 		const info = [];

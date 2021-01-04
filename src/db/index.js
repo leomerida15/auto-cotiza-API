@@ -10,22 +10,17 @@ const DB_PASS = process.env.DB_PASS || '123456';
 const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_USER = process.env.DB_USER || 'postgres';
 
-console.log('db >=+-----=<:+:>=-----+<');
-console.log({ DB_NAME, DB_DIALECT, DB_PASS, DB_HOST });
-
 // conet with database
-const config = () =>
+const web = () =>
 	new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 		host: DB_HOST,
 		dialect: DB_DIALECT,
-		dialectOptions: {
-			ssl: {
-				rejectUnauthorized: false,
-			},
-		},
+		dialectOptions: { ssl: { rejectUnauthorized: false } },
 	});
 
-const sequelize = config();
+const local = () => new Sequelize(DB_NAME, DB_USER, DB_PASS, { host: DB_HOST, dialect: DB_DIALECT });
+
+const sequelize = process.env.PORT ? web() : local();
 
 // inits
 const model = init_models(sequelize, DataTypes);
