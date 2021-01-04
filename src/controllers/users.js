@@ -76,7 +76,7 @@ const social = async (req, res) => {
 		const user = isNewUser ? await Users.findAll({ where: { email } }) : await Users.create({ email, password: '12345' });
 
 		// filter respues
-		const data = isNewUser ? user[0].dataValues || user.dataValues : user.dataValues;
+		const data = user[0].dataValues || user.dataValues;
 
 		// token
 		const token = await Token.generate(data.id, data.email);
