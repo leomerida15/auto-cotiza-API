@@ -1,9 +1,13 @@
 const descript = require('./code');
 module.exports = (req, res, err) => {
+	console.clear();
 	if (req != 404) code = err.code ? err.code : 500;
 	else {
 		const obj = { status: false, message: 'Sorry the route no is valid  404', path: req.originalUrl, method: req.method };
-		console.table([obj]);
+
+		if (obj.message.length + obj.code_descript < 80) console.table([obj]);
+		else console.log(obj);
+
 		res.status(404).json(obj);
 	}
 
@@ -12,7 +16,7 @@ module.exports = (req, res, err) => {
 
 	const obj = { status: false, message, code, code_descript, path: req.originalUrl, method: req.method };
 
-	if (obj.message.length < 80) console.table([obj]);
+	if (obj.message.length + obj.code_descript < 80) console.table([obj]);
 	else console.log(obj);
 
 	res.status(code).json(obj);
