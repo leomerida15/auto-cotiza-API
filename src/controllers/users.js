@@ -80,10 +80,12 @@ const social = async (req, res) => {
 		.    <<( ~ )>>
 		. 
 		. `);
-		console.log(user.dataValues);
-		console.log('id');
+		console.log('user ())>>==--<<:|:>>--==<<()');
+		console.log(user);
+		console.log(user[0].dataValues);
+		console.log('id ())>>==--<<:|:>>--==<<()');
 		console.log(user.dataValues.id);
-		console.log('id');
+		console.log('email ())>>==--<<:|:>>--==<<()');
 		console.log(user.dataValues.email);
 
 		// filter respues
