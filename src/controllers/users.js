@@ -84,12 +84,12 @@ const social = async (req, res) => {
 		console.log(user);
 		console.log(user[0].dataValues);
 		console.log('id ())>>==--<<:|:>>--==<<()');
-		console.log(user.dataValues.id);
+		console.log(user[0].dataValues.id);
 		console.log('email ())>>==--<<:|:>>--==<<()');
-		console.log(user.dataValues.email);
+		console.log(user[0].dataValues.email);
 
 		// filter respues
-		const data = user.dataValues;
+		const data = isNewUser ? user.dataValues : user[0].dataValues;
 
 		console.log('data ())>>==--<<:|:>>--==<<()');
 		console.log(data);
