@@ -75,7 +75,11 @@ const social = async (req, res) => {
 
 		const user = isNewUser ? await Users.create({ email, password: '12345' }) : await Users.findAll({ where: { email } });
 
-		console.clear();
+		console.log(`.
+		. 
+		.    <<( ~ )>>
+		. 
+		. `);
 		console.log(user.dataValues);
 		console.log('id');
 		console.log(user.dataValues.id);
