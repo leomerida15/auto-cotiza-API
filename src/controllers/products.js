@@ -3,10 +3,24 @@ const error = require('../middlewares/err/');
 const valid_data = require('../middlewares/data/');
 // modules with config
 const Token = require('../configs/token');
+const cloud_up = require('../configs/cloudinary');
 const fs = require('fs').promises;
 const path = require('path');
 
 const { Products, Sections, Products_Sections } = require('../db/');
+
+const relations = async (req, res) => {
+	try {
+		const resp = await Products_Sections.findAll();
+
+		const info = [];
+		for (const key in resp) info.push(resp[key].dataValues);
+
+		res.status(200).json({ state: true, message: 'create OK', info });
+	} catch (err) {
+		error(req, res, err);
+	}
+};
 
 const create = async (req, res) => {
 	try {
@@ -24,20 +38,24 @@ const create = async (req, res) => {
 		const id_user = valid_token.id;
 		const { name, price, desc, sects } = req.body;
 
-		const URL = process.env.PORT ? '/' : 'http://localhost:5000/';
-		const { filename } = req.file;
-		const path = URL + 'uploads/' + filename;
+		// up in cloudinary
+		const result = await cloud_up.upload(req.file.path);
+		console.log(result);
+		const { url, public_id } = result;
+		await fs.unlink(req.file.path);
+
+		// filter ids coverter the string to array and delete position 0
 		const ids = sects.split(',');
-
-		// proces
-		const product = await Products.create({ id_user, name, price, desc, path });
-
-		const id_product = product.dataValues.id;
 		ids.shift();
 
-		const relation_n_N = ids.map((id, i) => ({ id_section: parseInt(id), id_product }));
+		// proces
+		const product = await Products.create({ id_user, name, price, desc, path: url, public_id });
+		const id_product = product.dataValues.id;
 
-		relation_n_N.forEach(async (dat) => await Products_Sections.create(dat));
+		// Create array for the query at INTO in restriction table
+		const relation_n_N = ids.map((id, i) => ({ id_section: parseInt(id), id_product }));
+		// INTO in restiction table
+		relation_n_N.forEach(async (data) => await Products_Sections.create(data));
 
 		// query for get the products, in relation of the section
 		const querys_section = ids.map(async (id, i) => {
@@ -71,14 +89,11 @@ const destroy = async (req, res) => {
 
 		// proces
 		const product = await Products.findAll({ where: { id } });
-
-		const path_query = product[0].dataValues.path;
-		const path_img = path.resolve('src', product[0].dataValues.path.replace('http://localhost:5000/', ''));
-
-		const valid_img = await Products.findAll({ where: { path: path_query } });
-		if (valid_img.length === 1) await fs.unlink(path_img);
-
 		const products = await Products.destroy({ where: { id } });
+
+		// Destroy Img in the cloud
+		const { public_id } = product[0].dataValues;
+		await cloud_up.destroy(public_id);
 
 		const info = [];
 		for (const key in products) info.push(products[key].dataValues);
@@ -158,4 +173,4 @@ const edit = async (req, res) => {
 	}
 };
 
-module.exports = { create, bring, destroy, edit };
+module.exports = { create, bring, destroy, edit, relations };

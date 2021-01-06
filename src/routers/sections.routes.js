@@ -5,7 +5,7 @@ const { create, bring, destroy, edit } = require('../controllers/sections');
 
 router.route('/sections').get(bring);
 
-router.route('/section').post(create).put();
+router.route('/section').post(upload.single('files'), create);
 
 router.route('/section/:id').delete(destroy).put(edit);
 

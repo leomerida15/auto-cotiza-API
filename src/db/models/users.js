@@ -5,7 +5,7 @@ module.exports = (sequelize, type) => {
 		'users',
 		{
 			id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-			email: { type: STRING },
+			email: { type: STRING, unique: true },
 			password: { type: STRING },
 		},
 		{ freezeTableName: true, timestamps: false }

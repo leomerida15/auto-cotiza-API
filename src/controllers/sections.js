@@ -3,6 +3,8 @@ const error = require('../middlewares/err/');
 const valid_data = require('../middlewares/data/');
 // modules with config
 const Token = require('../configs/token');
+const cloud_up = require('../configs/cloudinary');
+const fs = require('fs').promises;
 
 const { Sections, Products, Products_Sections } = require('../db/');
 
@@ -19,10 +21,17 @@ const create = async (req, res) => {
 		// vars
 		const { id } = valid_token;
 		const { name, price } = req.body;
-		const data = { id_user: id, name, price };
 
-		// proces
-		const sections = await Sections.create(data);
+		// up in cloudinary
+		const result = await cloud_up.upload(req.file.path);
+		const { url, public_id } = result;
+		await fs.unlink(req.file.path);
+
+		console.log('public_id )>>==--<<>>--==<<(');
+		console.log(public_id);
+
+		// query INTO
+		const sections = await Sections.create({ id_user: id, name, price, path: url, public_id });
 
 		// filter info
 		const info = sections.dataValues;
@@ -46,8 +55,13 @@ const destroy = async (req, res) => {
 		// vars
 		const { id } = req.params;
 
-		// proces
+		// Destroy data in the DB
+		const section = await Sections.findAll({ where: { id } });
 		const sections = await Sections.destroy({ where: { id } });
+
+		// Destroy Img in the cloud
+		const { public_id } = section[0].dataValues;
+		await cloud_up.destroy(public_id);
 
 		const info = [];
 		for (const key in sections) info.push(sections[key].dataValues);

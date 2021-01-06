@@ -9,7 +9,8 @@ module.exports = (sequelize, type) => {
 			name: { type: STRING(80) },
 			price: { type: INTEGER },
 			desc: { type: STRING(80) },
-			path: { type: STRING(160) },
+			path: { type: STRING(250) },
+			public_id: { type: STRING(45) },
 		},
 		{ freezeTableName: true, timestamps: false }
 	);
