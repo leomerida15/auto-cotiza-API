@@ -10,6 +10,11 @@ const { Sections, Products, Products_Sections } = require('../db/');
 
 const create = async (req, res) => {
 	try {
+		console.clear();
+		console.log('body');
+		console.log(req.body);
+		console.log('file');
+		console.log(req.file);
 		// valid data
 		const valid_body = await valid_data(req, 'section');
 		if (!valid_body) throw { message: `Su furmulario debe contener campos vacios o escasos`, code: 400 };

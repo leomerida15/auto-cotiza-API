@@ -9,4 +9,9 @@ router.route('/section').post(upload.single('files'), create);
 
 router.route('/section/:id').delete(destroy).put(edit);
 
+router.post('/', upload.single('image'), (req, res) => {
+	console.log(req);
+	res.status(200);
+});
+
 module.exports = router;
